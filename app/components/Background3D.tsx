@@ -11,7 +11,7 @@ const DISTRIBUTION_DISTANCE = 0.2
 const MAX_POINTS = 10000
 const DISPLAY_DELAY = 0.05
 const GENERATION_PER_FRAME = 50
-const FAILED_ATTEMPTS_THRESHOLD = 40000
+const FAILED_ATTEMPTS_THRESHOLD = 20000
 
 const generateUnitVector = () => {
   const theta = 2 * Math.PI * Math.random()
@@ -35,11 +35,14 @@ const StreamingVertices = () => {
   const colorAttribRef = useRef(null)
 
 
-  useEffect(() => {
-    if (rainbowEffect) {
-      console.log("Rainbow effect activated")
-    }
-  }, [rainbowEffect])
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry()
+    const positions = new Float32Array(MAX_POINTS * 3)
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    colorAttribRef.current = new THREE.BufferAttribute(colorRef.current, 3)
+    geo.setAttribute('color', colorAttribRef.current)
+    return geo
+  }, [])
 
   useFrame((state) => {
     const currentTime = state.clock.getElapsedTime()
@@ -72,36 +75,40 @@ const StreamingVertices = () => {
       lastDisplayTimeRef.current = currentTime
     }
 
-  })
-
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry()
-    const positions = new Float32Array(MAX_POINTS * 3)
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    colorAttribRef.current = new THREE.BufferAttribute(colorRef.current, 3)
-    geo.setAttribute('color', colorAttribRef.current)
-    return geo
-  }, [])
-
-  useFrame(() => {
+    // Update positions and colors
     const positions = geometry.attributes.position.array
+    const colors = colorRef.current
     for (let i = 0; i < displayedPoints.length; i++) {
       const point = displayedPoints[i]
       positions[i * 3] = point.x
       positions[i * 3 + 1] = point.y
       positions[i * 3 + 2] = point.z
+
+      if (rainbowEffect) {
+        // Add time-based offset to create moving effect
+        const offset = currentTime * 0.3 // Adjust this value to control speed
+        const hue = ((point.y + 1) / 2 + offset) % 1 // Map y from [-1, 1] to [0, 1] and add offset
+        const color = new THREE.Color().setHSL(hue, 1, 0.5)
+        colors[i * 3] = color.r
+        colors[i * 3 + 1] = color.g
+        colors[i * 3 + 2] = color.b
+      } else {
+        colors[i * 3] = 1 // White color
+        colors[i * 3 + 1] = 1
+        colors[i * 3 + 2] = 1
+      }
     }
     geometry.attributes.position.needsUpdate = true
+    colorAttribRef.current.needsUpdate = true
     geometry.setDrawRange(0, displayedPoints.length)
   })
 
   return (
     <points geometry={geometry}>
       <pointsMaterial
-        color={rainbowEffect ? 'white' : '#ffffff'}
-        size={0.02}
+        size={0.04}
         sizeAttenuation={true}
-        vertexColors={rainbowEffect}
+        vertexColors={true}
       />
     </points>
   )
@@ -109,8 +116,18 @@ const StreamingVertices = () => {
 
 const Background3D = () => {
   return (
-    <div style={{ position: 'fixed', top: 50, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
-      <Canvas camera={{ position: [3, 3, 3], fov: 60 }}>
+    <div style={{ 
+      position: 'fixed', 
+      top: '25%', 
+      left: '25%', 
+      width: '50%', 
+      height: '50%', 
+      zIndex: 10, 
+      backgroundColor: 'black',
+      borderRadius: '10px',
+      overflow: 'hidden'
+    }}>
+      <Canvas camera={{ position: [3, 3, 3], fov: 30 }}>
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
           <StreamingVertices />
