@@ -30,11 +30,11 @@ export default function Home() {
           </ul>
         </nav>
         <div className="max-w-5xl mx-auto w-full h-full flex flex-col justify-between">
-          <h1 className="text-5xl sm:text-8xl font-bold mt-20 sm:mt-14 text-center sm:text-left sm:ml-[-150px] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight pb-4">
+          <h1 className="text-5xl sm:text-8xl font-bold mt-10 xs:mt-20 sm:mt-14 text-center sm:text-left sm:ml-[-150px] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight pb-4">
             Hi, I&apos;m Vijay
           </h1>
           <p className="text-lg sm:text-xl mb-20 sm:mb-8 mx-auto sm:mr-[-200px] text-gray-300 text-center sm:text-right max-w-md sm:absolute sm:bottom-20 sm:right-[250px]">
-            Junior at U.S.C. studying math and computer science. Passionate about discovering and building new things.
+            Junior at U.S.C. studying Math and Computer Science. Passionate about discovering and building new things.
           </p>
         </div>
       </main>
@@ -42,7 +42,7 @@ export default function Home() {
         <p className="text-gray-600 text-sm sm:text-base">Built by Vijay Kumaravelrajan</p>
         <div className="mt-2">
           <a
-            href="https://www.linkedin.com/in/vijay-kumaravel-rajan"
+            href="https://www.linkedin.com/in/vijay-kumaravelrajan/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 hover:text-blue-300 mx-2 text-sm sm:text-base"
@@ -50,7 +50,7 @@ export default function Home() {
             LinkedIn
           </a>
           <a
-            href="https://github.com/vijay-kr"
+            href="https://github.com/VijayGKR"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 hover:text-blue-300 mx-2 text-sm sm:text-base"

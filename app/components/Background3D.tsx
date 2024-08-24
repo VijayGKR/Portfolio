@@ -5,11 +5,11 @@ import * as THREE from 'three'
 import { PointOctree } from 'sparse-octree'
 import { OrbitControls } from '@react-three/drei'
 
-const DISTRIBUTION_DISTANCE = 0.1
+const DISTRIBUTION_DISTANCE = 0.2
 const MAX_POINTS = 10000
-const DISPLAY_DELAY = 0.05
+const DISPLAY_DELAY = 0.02
 const GENERATION_PER_FRAME = 50
-const FAILED_ATTEMPTS_THRESHOLD = 20000
+const FAILED_ATTEMPTS_THRESHOLD = 6000
 
 const generateUnitVector = () => {
   const theta = 2 * Math.PI * Math.random()
