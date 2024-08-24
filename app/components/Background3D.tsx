@@ -23,14 +23,14 @@ const generateUnitVector = () => {
 
 const StreamingVertices = () => {
   const octreeRef = useRef(new PointOctree(new THREE.Vector3(-1, -1, -1), new THREE.Vector3(1, 1, 1)))
-  const [displayedPoints, setDisplayedPoints] = useState([])
-  const generatedPointsRef = useRef([])
+  const [displayedPoints, setDisplayedPoints] = useState<THREE.Vector3[]>([])
+  const generatedPointsRef = useRef<THREE.Vector3[]>([])
   const lastDisplayTimeRef = useRef(0)
   const failedAttemptsRef = useRef(0)
   const [rainbowEffect, setRainbowEffect] = useState(false)
 
   const colorRef = useRef(new Float32Array(MAX_POINTS * 3))
-  const colorAttribRef = useRef(null)
+  const colorAttribRef = useRef<THREE.BufferAttribute | null>(null)
 
 
   const geometry = useMemo(() => {
@@ -97,7 +97,9 @@ const StreamingVertices = () => {
       }
     }
     geometry.attributes.position.needsUpdate = true
-    colorAttribRef.current.needsUpdate = true
+    if (colorAttribRef.current) {
+      colorAttribRef.current.needsUpdate = true
+    }
     geometry.setDrawRange(0, displayedPoints.length)
   })
 
@@ -123,11 +125,11 @@ const RotatingCamera = () => {
   return null
 }
 
-const Background3D = () => {
+const Background3D = ({ top, fov }: { top: number, fov: number }) => {
   return (
     <div style={{ 
       position: 'fixed', 
-      top: '25%', 
+      top: `${top}%`, 
       left: '25%', 
       width: '50%', 
       height: '50%', 
@@ -136,7 +138,7 @@ const Background3D = () => {
       borderRadius: '10px',
       overflow: 'hidden'
     }}>
-      <Canvas camera={{ position: [3, 3, 3], fov: 30 }}>
+      <Canvas camera={{ position: [3, 3, 3], fov: fov }}>
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
           <StreamingVertices />
