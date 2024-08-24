@@ -9,7 +9,6 @@ const DISTRIBUTION_DISTANCE = 0.2
 const MAX_POINTS = 10000
 const DISPLAY_DELAY = 0.02
 const GENERATION_PER_FRAME = 50
-const FAILED_ATTEMPTS_THRESHOLD = 6000
 
 const generateUnitVector = () => {
   const theta = 2 * Math.PI * Math.random()
@@ -21,7 +20,7 @@ const generateUnitVector = () => {
   )
 }
 
-const StreamingVertices = () => {
+const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) => {
   const octreeRef = useRef(new PointOctree(new THREE.Vector3(-1, -1, -1), new THREE.Vector3(1, 1, 1)))
   const [displayedPoints, setDisplayedPoints] = useState<THREE.Vector3[]>([])
   const generatedPointsRef = useRef<THREE.Vector3[]>([])
@@ -58,7 +57,7 @@ const StreamingVertices = () => {
           failedAttemptsRef.current = 0
         } else {
           failedAttemptsRef.current++
-          if (failedAttemptsRef.current >= FAILED_ATTEMPTS_THRESHOLD) {
+          if (failedAttemptsRef.current >= failureThreshold) {
             console.log("Failed attempts threshold reached:", failedAttemptsRef.current)
             setRainbowEffect(true)
           }
@@ -125,7 +124,7 @@ const RotatingCamera = () => {
   return null
 }
 
-const Background3D = ({ top, fov }: { top: number, fov: number }) => {
+const Background3D = ({ top, fov, failureThreshold }: { top: number, fov: number, failureThreshold: number }) => {
   return (
     <div style={{ 
       position: 'fixed', 
@@ -141,7 +140,7 @@ const Background3D = ({ top, fov }: { top: number, fov: number }) => {
       <Canvas camera={{ position: [3, 3, 3], fov: fov }}>
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
-          <StreamingVertices />
+          <StreamingVertices failureThreshold={failureThreshold} />
           <RotatingCamera />
           <OrbitControls 
             enableDamping={false}

@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <Background3D top={isMobile ? 35 : 25} fov={isMobile ? 45 : 30} />
+      <Background3D top={isMobile ? 35 : 25} fov={isMobile ? 45 : 30} failureThreshold={isMobile ? 2000 : 10000} />
       <main className="flex-1 p-4 sm:p-8 text-white font-['Times_New_Roman'] relative min-h-screen bg-black">
         <nav className="absolute top-0 left-0 right-0 flex justify-center py-4">
           <ul className="flex space-x-4 sm:space-x-16">
