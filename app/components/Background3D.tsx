@@ -1,13 +1,11 @@
 "use client"
 import React, { useMemo, useRef, useState, useCallback, Suspense, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { PointOctree } from 'sparse-octree'
-import dynamic from 'next/dynamic'
+import { OrbitControls } from '@react-three/drei'
 
-const OrbitControls = dynamic(() => import('@react-three/drei').then((mod) => mod.OrbitControls), { ssr: false })
-
-const DISTRIBUTION_DISTANCE = 0.2
+const DISTRIBUTION_DISTANCE = 0.1
 const MAX_POINTS = 10000
 const DISPLAY_DELAY = 0.05
 const GENERATION_PER_FRAME = 50
@@ -106,12 +104,23 @@ const StreamingVertices = () => {
   return (
     <points geometry={geometry}>
       <pointsMaterial
-        size={0.04}
+        size={0.06}
         sizeAttenuation={true}
         vertexColors={true}
       />
     </points>
   )
+}
+
+const RotatingCamera = () => {
+  const { camera } = useThree()
+  
+  useFrame((state, delta) => {
+    camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), delta * 0.1)
+    camera.lookAt(0, 0, 0)
+  })
+
+  return null
 }
 
 const Background3D = () => {
@@ -131,11 +140,18 @@ const Background3D = () => {
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
           <StreamingVertices />
-          <OrbitControls enableDamping={false} />
+          <RotatingCamera />
+          <OrbitControls 
+            enableDamping={false}
+            enableRotate={true}
+            enableZoom={false}
+            enablePan={false}
+            autoRotate={false}
+          />
         </Suspense>
       </Canvas>
     </div>
   )
 }
 
-export default dynamic(() => Promise.resolve(Background3D), { ssr: false })
+export default Background3D
