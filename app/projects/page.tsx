@@ -5,25 +5,25 @@ const projects = [
   {
     title: 'Jargon',
     description: 'A chrome extension to turn your browsing into language learning, as well as companion website.',
-    link: 'https://jargonlearn.com',
+    link: '/projects/jargon',
     thumbnail: '/jargon.png',
   },
   {
     title: 'LLM-Peer-Review',
     description: 'A better interface to edit text with LLMs',
-    link: 'https://llm-peer-review.com',
+    link: '/projects/peer-review',
     thumbnail: '/llm-peer-review.png',
   },
   {
     title: 'Portfolio',
     description: 'My personal website',
-    link: "/",
+    link: '/projects/portfolio',
     thumbnail: '/portfolio.png',
   },
   {
     title: 'LLM Translation Benchmark',
     description: 'Benchmarking LLM translation quality across 20+ languages, several popular models and sampling hyperparameters.',
-    link: '',
+    link: '/projects/benchmark',
     thumbnail: '/llm-translation-benchmark.png',
   }
 ];
