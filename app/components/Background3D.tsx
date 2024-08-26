@@ -135,7 +135,8 @@ const Background3D = ({ top, fov, failureThreshold }: { top: number, fov: number
       zIndex: 10, 
       backgroundColor: 'black',
       borderRadius: '10px',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      cursor : 'pointer'
     }}>
       <Canvas camera={{ position: [3, 3, 3], fov: fov }}>
         <ambientLight intensity={0.5} />

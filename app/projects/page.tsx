@@ -20,6 +20,12 @@ const projects = [
     link: "/",
     thumbnail: '/portfolio.png',
   },
+  {
+    title: 'LLM Translation Benchmark',
+    description: 'Benchmarking LLM translation quality across 20+ languages, several popular models and sampling hyperparameters.',
+    link: '',
+    thumbnail: '/llm-translation-benchmark.png',
+  }
 ];
 
 export default function Projects() {
