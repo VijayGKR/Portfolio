@@ -3,10 +3,9 @@ import Image from 'next/image';
 
 // This is a placeholder. Replace with actual project data or fetch from an API
 const project = {
-  title: "Jargon",
-  description: "A chrome extension to turn your browsing into language learning, as well as companion website.",
-  image: "/jargon.png",
-  technologies: ["React", "Node.js", "MongoDB"],
+  title: "Portfolio",
+  description: "The website you are currently on!",
+  image: "/favicon.ico",
   githubLink: null,
   liveLink: "https://jargonlearn.com",
 };
@@ -51,6 +50,7 @@ export default function ProjectPage() {
             />
           </div>
           <p className="text-gray-300 text-base sm:text-lg">{project.description}</p>
+          <p className="text-gray-300 text-base sm:text-lg">Though the overall design of the website is simple, one interesting feature is the initial animation of the 3D background. One problem that has fascinated me is distributing points uniformly on the surface of a sphere. It is a problem that has many applications, mainly in physics and computer graphics (Ray Tracing). Here is a link with some interesting phyics applications -  https://www.unsw.edu.au/science/our-schools/maths/our-school/spotlight-on-our-people/history-school/glimpses-mathematics-and-statistics/distributing-points-sphere The technique I've used to render the points uniformly is through rejection sampling. I generate unit vectors that are parameterized by the azimuth and elevation angle randomly, as they are gauranteed to land on the surface of a spehre of radius 1.</p>
           <div>
           </div>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
@@ -59,9 +59,6 @@ export default function ProjectPage() {
                 View on GitHub
               </a>
             )}
-            <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded transition duration-300">
-              Link
-            </a>
           </div>
         </div>
       </div>
