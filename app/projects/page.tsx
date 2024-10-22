@@ -3,6 +3,12 @@ import Image from 'next/image';
 
 const projects = [
   {
+    title: 'Empathy',
+    description: 'Capture collective memories with just your voice. Inspire new connections',
+    link: 'https://empathy-seven.vercel.app',
+    thumbnail: '/empathy.png',
+  },
+  {
     title: 'Jargon',
     description: 'A chrome extension to turn your browsing into language learning, as well as companion website.',
     link: 'https://jargonlearn.com',
@@ -19,7 +25,7 @@ const projects = [
     description: 'My personal website',
     link: "/",
     thumbnail: '/portfolio.png',
-  },
+  }
 ];
 
 export default function Projects() {

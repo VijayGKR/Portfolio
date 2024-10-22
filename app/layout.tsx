@@ -6,7 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Vijay's Portfolio",
+  title: "Vijay Kumaravelrajan Portfolio",
   description: "Vijay Kumaravelrajan's portfolio website with projects and blog posts",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
