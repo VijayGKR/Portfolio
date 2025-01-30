@@ -27,6 +27,7 @@ export default function Home() {
             <li><a href="/about" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">About</a></li>
             <li><a href="/projects" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Projects</a></li>
             <li><a href="/blog" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Blog</a></li>
+            <li><a href="/resume" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Resume</a></li>
           </ul>
         </nav>
         <div className="max-w-5xl mx-auto w-full h-full flex flex-col justify-between">
