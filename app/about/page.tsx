@@ -26,6 +26,11 @@ export default function About() {
               Blog
             </Link>
           </li>
+          <li>
+            <Link href="/resume" className="text-white hover:text-gray-300 transition duration-300 text-sm sm:text-lg">
+              Resume
+            </Link>
+          </li>
         </ul>
       </nav>
       <div className="max-w-3xl mx-auto pt-16 sm:pt-0">
