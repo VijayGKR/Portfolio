@@ -1,5 +1,5 @@
 "use client"
-import React, { useMemo, useRef, useState, useCallback, Suspense, useEffect } from 'react'
+import React, { useMemo, useRef, useState, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { PointOctree } from 'sparse-octree'
@@ -30,6 +30,7 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
 
   const colorRef = useRef(new Float32Array(MAX_POINTS * 3))
   const colorAttribRef = useRef<THREE.BufferAttribute | null>(null)
+  const tempColorRef = useRef(new THREE.Color())
 
 
   const geometry = useMemo(() => {
@@ -58,7 +59,6 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
         } else {
           failedAttemptsRef.current++
           if (failedAttemptsRef.current >= failureThreshold) {
-            console.log("Failed attempts threshold reached:", failedAttemptsRef.current)
             setRainbowEffect(true)
           }
         }
@@ -85,10 +85,10 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
         // Add time-based offset to create moving effect
         const offset = currentTime * 0.3 // Adjust this value to control speed
         const hue = ((point.y + 1) / 2 + offset) % 1 // Map y from [-1, 1] to [0, 1] and add offset
-        const color = new THREE.Color().setHSL(hue, 1, 0.5)
-        colors[i * 3] = color.r
-        colors[i * 3 + 1] = color.g
-        colors[i * 3 + 2] = color.b
+        tempColorRef.current.setHSL(hue, 1, 0.5)
+        colors[i * 3] = tempColorRef.current.r
+        colors[i * 3 + 1] = tempColorRef.current.g
+        colors[i * 3 + 2] = tempColorRef.current.b
       } else {
         colors[i * 3] = 1 // White color
         colors[i * 3 + 1] = 1
@@ -115,9 +115,12 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
 
 const RotatingCamera = () => {
   const { camera } = useThree()
-  
+  const quaternionRef = useRef(new THREE.Quaternion())
+  const yAxisRef = useRef(new THREE.Vector3(0, 1, 0))
+
   useFrame((state, delta) => {
-    camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), delta * 0.1)
+    quaternionRef.current.setFromAxisAngle(yAxisRef.current, delta * 0.1)
+    camera.position.applyQuaternion(quaternionRef.current)
     camera.lookAt(0, 0, 0)
   })
 

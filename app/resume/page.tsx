@@ -1,4 +1,10 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Resume - Vijay Kumaravelrajan',
+  description: 'View the resume of Vijay Kumaravelrajan.',
+};
 
 export default function Resume() {
   return (
@@ -33,11 +39,24 @@ export default function Resume() {
         </ul>
       </nav>
       <div className="max-w-5xl mx-auto pt-16 sm:pt-0 h-screen">
-        <embed
-          src="/resume.pdf"
+        <object
+          data="/resume.pdf"
           type="application/pdf"
           className="w-full h-full"
-        />
+          title="Vijay Kumaravelrajan's Resume"
+          aria-label="Resume PDF viewer"
+        >
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-xl mb-4">Unable to display PDF.</p>
+            <a
+              href="/resume.pdf"
+              download
+              className="text-blue-400 hover:text-blue-300 underline text-lg"
+            >
+              Download Resume (PDF)
+            </a>
+          </div>
+        </object>
       </div>
     </main>
   );
