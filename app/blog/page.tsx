@@ -1,4 +1,10 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog - Vijay Kumaravelrajan',
+  description: 'Blog posts by Vijay Kumaravelrajan. Coming soon.',
+};
 
 export default function Blog() {
   return (

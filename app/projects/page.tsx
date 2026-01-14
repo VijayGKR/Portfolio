@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Projects - Vijay Kumaravelrajan',
+  description: 'Explore projects built by Vijay Kumaravelrajan, including Empathy, Jargon, and LLM-Peer-Review.',
+};
 
 const projects = [
   {
@@ -62,8 +68,8 @@ export default function Projects() {
       </nav>
       <div className="max-w-3xl mx-auto pt-16 sm:pt-0">
         <div className="space-y-6 sm:space-y-8">
-          {projects.map((project, index) => (
-            <Link href={project.link} key={index}>
+          {projects.map((project) => (
+            <Link href={project.link} key={project.title}>
               <div className="border border-gray-700 p-4 sm:p-6 rounded-lg hover:bg-gray-900 transition duration-300 flex flex-col sm:flex-row justify-between items-center mt-10">
                 <div className="flex-grow pr-0 sm:pr-4 mb-4 sm:mb-0 text-center sm:text-left">
                   <h2 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-4">{project.title}</h2>

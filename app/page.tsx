@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from "next/image";
+import Link from "next/link";
 import Background3D from "./components/Background3D";
 
 export default function Home() {
@@ -24,10 +24,10 @@ export default function Home() {
       <main className="flex-1 p-4 sm:p-8 text-white font-['Times_New_Roman'] relative min-h-screen bg-black">
         <nav className="absolute top-0 left-0 right-0 flex justify-center py-4">
           <ul className="flex space-x-4 sm:space-x-16">
-            <li><a href="/about" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">About</a></li>
-            <li><a href="/projects" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Projects</a></li>
-            <li><a href="/blog" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Blog</a></li>
-            <li><a href="/resume" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Resume</a></li>
+            <li><Link href="/about" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">About</Link></li>
+            <li><Link href="/projects" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Projects</Link></li>
+            <li><Link href="/blog" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Blog</Link></li>
+            <li><Link href="/resume" className="text-lg sm:text-xl hover:text-blue-400 transition duration-300">Resume</Link></li>
           </ul>
         </nav>
         <div className="max-w-5xl mx-auto w-full h-full flex flex-col justify-between">

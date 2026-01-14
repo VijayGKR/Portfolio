@@ -1,5 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About - Vijay Kumaravelrajan',
+  description: 'Learn about Vijay Kumaravelrajan, a junior at USC studying Applied Math and Computer Science.',
+};
 
 export default function About() {
   return (
@@ -39,8 +45,9 @@ export default function About() {
             <Image
               src="/headshot.png"
               alt="Vijay's headshot"
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
             />
           </div>
           <div className="flex-1 text-center sm:text-left">
