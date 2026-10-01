@@ -39,8 +39,9 @@ export default function About() {
             <Image
               src="/headshot.png"
               alt="Vijay's headshot"
-              layout="fill"
-              objectFit="cover"
+              fill
+              sizes="(max-width: 639px) 128px, 192px"
+              className="object-cover"
             />
           </div>
           <div className="flex-1 text-center sm:text-left">
