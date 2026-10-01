@@ -1,5 +1,5 @@
 "use client"
-import React, { useMemo, useRef, useState, useCallback, Suspense, useEffect } from 'react'
+import React, { useMemo, useRef, useState, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { PointOctree } from 'sparse-octree'
@@ -28,20 +28,14 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
   const failedAttemptsRef = useRef(0)
   const [rainbowEffect, setRainbowEffect] = useState(false)
 
-  const colorRef = useRef(new Float32Array(MAX_POINTS * 3))
-  const colorAttribRef = useRef<THREE.BufferAttribute | null>(null)
-
-
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry()
-    const positions = new Float32Array(MAX_POINTS * 3)
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    colorAttribRef.current = new THREE.BufferAttribute(colorRef.current, 3)
-    geo.setAttribute('color', colorAttribRef.current)
-    return geo
-  }, [])
+  const geometryRef = useRef<THREE.BufferGeometry>(null)
+  const positions = useMemo(() => new Float32Array(MAX_POINTS * 3), [])
+  const colors = useMemo(() => new Float32Array(MAX_POINTS * 3), [])
 
   useFrame((state) => {
+    const geometry = geometryRef.current
+    if (!geometry) return
+
     const currentTime = state.clock.getElapsedTime()
 
     // Generate new points
@@ -58,7 +52,6 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
         } else {
           failedAttemptsRef.current++
           if (failedAttemptsRef.current >= failureThreshold) {
-            console.log("Failed attempts threshold reached:", failedAttemptsRef.current)
             setRainbowEffect(true)
           }
         }
@@ -74,7 +67,7 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
 
     // Update positions and colors
     const positions = geometry.attributes.position.array
-    const colors = colorRef.current
+    const colors = geometry.attributes.color.array
     for (let i = 0; i < displayedPoints.length; i++) {
       const point = displayedPoints[i]
       positions[i * 3] = point.x
@@ -96,14 +89,16 @@ const StreamingVertices = ({ failureThreshold }: { failureThreshold: number }) =
       }
     }
     geometry.attributes.position.needsUpdate = true
-    if (colorAttribRef.current) {
-      colorAttribRef.current.needsUpdate = true
-    }
+    geometry.attributes.color.needsUpdate = true
     geometry.setDrawRange(0, displayedPoints.length)
   })
 
   return (
-    <points geometry={geometry}>
+    <points>
+      <bufferGeometry ref={geometryRef}>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+      </bufferGeometry>
       <pointsMaterial
         size={0.06}
         sizeAttenuation={true}
